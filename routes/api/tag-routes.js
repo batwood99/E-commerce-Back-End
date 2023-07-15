@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(tags);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'An error occurred while retrieving the tags.' });
+    res.status(500).json({ error: 'An error occurred while retrieving the tags. Please try again.' });
   }
 });
 
@@ -25,20 +25,20 @@ router.get('/:id', async (req, res) => {
       include: [{ model: Product }],
     });
     if (!tag) {
-      res.status(404).json({ message: 'This tag does not exist.' });
+      res.status(404).json({ message: 'You must enter a valid tag.' });
     } else {
       res.status(200).json(tag);
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'An error occurred while retrieving the tag.' });
+    res.status(500).json({ error: 'An error occurred while retrieving the tag. Please try again.' });
   }
 });
 
 router.post('/', async (req, res) => {
   // create a new tag
   if (!req.body.tag_name) {
-    res.status(400).json({ error: 'You must enter a tag_name.' });
+    res.status(400).json({ error: 'You must enter a tag name. Please try again.' });
     return;
   }
 
@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
     res.status(201).json(newTag);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'An error occurred while creating the tag.' });
+    res.status(500).json({ error: 'An error occurred while creating the tag. Please try again.' });
   }
 });
 
@@ -60,13 +60,13 @@ router.put('/:id', async (req, res) => {
       { where: { id: req.params.id } }
     );
     if (rowsAffected === 0) {
-      res.status(404).json({ message: 'This tag does not exist.' });
+      res.status(404).json({ message: 'This tag does not exist. You must enter a valid tag.' });
     } else {
       res.status(200).json(updatedTag);
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'An error occurred while updating the tag.' });
+    res.status(500).json({ error: 'An error occurred while updating the tag. Please try again.' });
   }
 });
 
@@ -75,13 +75,13 @@ router.delete('/:id', async (req, res) => {
   try {
     const deletedTag = await Tag.destroy({ where: { id: req.params.id } });
     if (deletedTag === 0) {
-      res.status(404).json({ message: 'This tag does not exist.' });
+      res.status(404).json({ message: 'This tag does not exist. You must enter a valid tag.' });
     } else {
       res.status(200).json({ message: 'Tag deleted successfully.' });
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'An error occurred while deleting the tag.' });
+    res.status(500).json({ error: 'An error occurred while deleting the tag. Please try again.' });
   }
 });
 

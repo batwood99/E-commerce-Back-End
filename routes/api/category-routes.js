@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     });
     res.status(200).json(categories);
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while retrieving the categories.' });
+    res.status(500).json({ error: 'An error occurred while retrieving the categories. Please try again.' });
   }
 });
 
@@ -24,7 +24,7 @@ router.get('/:id', async (req, res) => {
       include: [{ model: Product }],
     });
     if (!category) {
-      res.status(404).json({ message: 'This category does not exist.' });
+      res.status(404).json({ message: 'This category does not exist. Please try again.' });
       return;
     }
     res.status(200).json(category);
@@ -36,7 +36,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new category
   if (!req.body.category_name) {
-    res.status(400).json({ error: 'You must enter a category_name.' });
+    res.status(400).json({ error: 'You must enter a category name.' });
     return;
   }
 
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
     const newCategory = await Category.create(req.body);
     res.status(201).json(newCategory);
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while creating the category.' });
+    res.status(500).json({ error: 'An error occurred while creating the category. Please try again.' });
   }
 });
 
@@ -62,12 +62,12 @@ router.put('/:id', async (req, res) => {
   )
     .then((result) => {
       if (result[0] === 0) {
-        res.status(404).json({ message: 'This category does not exist.' });
+        res.status(404).json({ message: 'This category does not exist. Please try again.' });
         return;
       }
       res.status(200).json({ message: 'Category updated successfully.' });
     })
-    .catch((err) => res.status(500).json({ error: 'An error occurred while updating the category.' }));
+    .catch((err) => res.status(500).json({ error: 'An error occurred while updating the category. Please try again.' }));
 });
 
 router.delete('/:id', async (req, res) => {
@@ -79,12 +79,12 @@ router.delete('/:id', async (req, res) => {
   })
     .then((result) => {
       if (result === 0) {
-        res.status(404).json({ message: 'This category does not exist.' });
+        res.status(404).json({ message: 'This category does not exist. Please try again.' });
         return;
       }
       res.status(200).json({ message: 'Category deleted successfully.' });
     })
-    .catch((err) => res.status(500).json({ error: 'An error occurred while deleting the category.' }));
+    .catch((err) => res.status(500).json({ error: 'An error occurred while deleting the category. Please try again.' }));
 });
 
 module.exports = router;

@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
     }
     res.status(200).json(productData);
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while retrieving the product.' });
+    res.status(500).json({ error: 'An error occurred while retrieving the product. Please try again.' });
   }
 });
 
@@ -118,7 +118,7 @@ router.delete('/:id', async (req, res) => {
     const deletedProduct = await Product.destroy({ where: { id: req.params.id } });
     res.status(200).json({ message: 'Product deleted successfully.' });
   } catch (err) {
-    res.status(500).json({ error: 'An error occurred while deleting the product.' });
+    res.status(500).json({ error: 'An error occurred while deleting the product. Please try again.' });
   }
 });
 
